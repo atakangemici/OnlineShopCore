@@ -9,6 +9,9 @@ namespace Esnafim.Models
 {
     public class Dukkanlar : BaseEntity
     {
+        [Column("dukkan_adi")]
+        public string DukkanAdi { get; set; }
+
         [Column("esnaf_user_id")]
         public int EsnafUserId { get; set; }
 

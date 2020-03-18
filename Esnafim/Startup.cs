@@ -26,6 +26,19 @@ namespace Esnafim
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder
+                            .SetIsOriginAllowed(_ => true)
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    });
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<EsnafimContext>(options =>
@@ -45,6 +58,7 @@ namespace Esnafim
                 app.UseHsts();
             }
 
+            app.UseCors("AllowAll");
             app.UseHttpsRedirection();
             app.UseMvc();
         }
