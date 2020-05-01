@@ -28,11 +28,11 @@ namespace Esnafim.Helpers
             return shops;
         }
 
-        public async Task<List<Kategoriler>> GetProducts()
+        public async Task<List<Kategoriler>> GetProducts(int id)
         {
-            var products = _dbContext.Kategoriler
-             .Include(x => x.Urunler)
+            var products = _dbContext.Kategoriler            
             .Where(x => x.Deleted != true)
+            .Include(x => x.Urunler)
             .ToList();
 
             return products;

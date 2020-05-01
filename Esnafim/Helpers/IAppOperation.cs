@@ -12,7 +12,7 @@ namespace Esnafim.Helpers
     {
         Task<List<DukkanKategori>> AllShops();
         Task<MusteriUser> Login(JObject data);
-        Task<List<Kategoriler>> GetProducts();
+        Task<List<Kategoriler>> GetProducts(int id);
         Task<int> AddOrderProduct(JObject data);
 
     }

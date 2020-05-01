@@ -55,7 +55,7 @@ namespace Esnafim.Controllers
         [Route("get_products/{id:int}"), HttpGet]
         public async Task<ActionResult<Kategoriler>> GetProducts(int id)
         {
-            var products = await _appOperation.GetProducts();
+            var products = await _appOperation.GetProducts(id);
 
             return Ok(products);
         }
