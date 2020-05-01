@@ -15,30 +15,33 @@ using System.Text;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using Esnafim.Models;
+using Esnafim.Helpers;
 
 namespace Esnafim.Controllers
 {
     [Route("api/app")]
     public class AppController : ControllerBase
     {
-        private readonly EsnafimContext dbContext;
-        private readonly IConfiguration _config;
+        private readonly IAppOperation _appOperation;
 
-
-        public AppController(EsnafimContext context, IConfiguration config)
+        public AppController(IAppOperation appOperation)
         {
-            dbContext = context;
-            _config = config;
+            _appOperation = appOperation;
         }
 
-
-        [Route("get_all_dukkanlar"), HttpGet]
-        public async Task<ActionResult<Dukkanlar>> getAllDukkanlar()
+        // GET api/values
+        [HttpGet]
+        public ActionResult<IEnumerable<string>> Get()
         {
-           var dukkanlar = dbContext.Dukkanlar
-            .Where(x => x.Deleted != true).ToList();
+            return new string[] { "home page" };
+        }
 
-            return Ok(dukkanlar);
+        [Route("get_all_shops"), HttpGet]
+        public async Task<ActionResult<Dukkanlar>> GetAllShops()
+        {
+            var shops = await _appOperation.AllShops();
+
+            return Ok(shops);
         }
 
     }
