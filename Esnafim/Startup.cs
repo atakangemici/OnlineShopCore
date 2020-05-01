@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Esnafim
 {
@@ -40,7 +42,21 @@ namespace Esnafim
                     });
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+
+             .AddJsonOptions(opt =>
+              {
+                  opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                  opt.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.None;
+                  opt.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                  opt.SerializerSettings.DateParseHandling = DateParseHandling.None;
+                  opt.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+
+                  opt.SerializerSettings.ContractResolver = new DefaultContractResolver
+                  {
+                      NamingStrategy = new SnakeCaseNamingStrategy(),
+                  };
+              });
 
             services.AddDbContext<EsnafimContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

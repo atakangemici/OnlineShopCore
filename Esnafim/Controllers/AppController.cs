@@ -37,11 +37,27 @@ namespace Esnafim.Controllers
         }
 
         [Route("get_all_shops"), HttpGet]
-        public async Task<ActionResult<Dukkanlar>> GetAllShops()
+        public async Task<ActionResult<DukkanKategori>> GetAllShops()
         {
             var shops = await _appOperation.AllShops();
 
             return Ok(shops);
+        }
+
+        [Route("get_products/{id:int}"), HttpGet]
+        public async Task<ActionResult<Kategoriler>> GetProducts(int id)
+        {
+            var products = await _appOperation.GetProducts();
+
+            return Ok(products);
+        }
+
+        [Route("login"), HttpPost]
+        public async Task<ActionResult<MusteriUser>> Login([FromBody]JObject data)
+        {
+            var user = await _appOperation.Login(data);
+
+            return Ok(user);
         }
 
     }

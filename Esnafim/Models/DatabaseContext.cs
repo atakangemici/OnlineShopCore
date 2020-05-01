@@ -15,6 +15,8 @@ namespace Esnafim
         public DbSet<SiparisDetaylari> SiparisDetaylari { get; set; }
         public DbSet<Siparisler> Siparisler { get; set; }
         public DbSet<Urunler> Urunler { get; set; }
+        public DbSet<DukkanKategori> DukkanKategori { get; set; }
+
 
 
         public EsnafimContext(DbContextOptions<EsnafimContext> options) : base(options)

@@ -12,9 +12,6 @@ namespace Esnafim.Models
         [Column("urun_adi")]
         public string UrunAdı { get; set; }
 
-        [Column("urun_kategori_id")]
-        public string UrunKategoriId { get; set; }
-
         [Column("fiyat")]
         public double Fiyat { get; set; }
 
@@ -22,8 +19,6 @@ namespace Esnafim.Models
         public string AdetKg { get; set; }
 
         public virtual Kategoriler Kategori { get; set; }
-        public virtual ICollection<Dukkanlar> Dukkan { get; set; }
-
 
     }
 }

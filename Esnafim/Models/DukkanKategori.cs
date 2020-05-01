@@ -7,12 +7,13 @@ using System.Web;
 
 namespace Esnafim.Models
 {
-    public class Dukkanlar : BaseEntity
+    public class DukkanKategori : BaseEntity
     {
-        [Column("dukkan_adi")]
-        public string DukkanAdi { get; set; }
+        [Column("kategori_adi")]
+        public string KategoriAdi { get; set; }
 
-        public virtual DukkanKategori DukkanKategori { get; set; }
+        public virtual ICollection<Dukkanlar> Dukkanlar { get; set; }
+
 
     }
 }

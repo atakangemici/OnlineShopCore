@@ -9,6 +9,24 @@ namespace Esnafim.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "DukkanKategori",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    created_by = table.Column<int>(nullable: true),
+                    updated_by = table.Column<int>(nullable: true),
+                    created_at = table.Column<DateTime>(nullable: false),
+                    updated_at = table.Column<DateTime>(nullable: true),
+                    deleted = table.Column<bool>(nullable: false),
+                    kategori_adi = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DukkanKategori", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EsnafUser",
                 columns: table => new
                 {
@@ -114,6 +132,31 @@ namespace Esnafim.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Dukkanlar",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    created_by = table.Column<int>(nullable: true),
+                    updated_by = table.Column<int>(nullable: true),
+                    created_at = table.Column<DateTime>(nullable: false),
+                    updated_at = table.Column<DateTime>(nullable: true),
+                    deleted = table.Column<bool>(nullable: false),
+                    dukkan_adi = table.Column<string>(nullable: true),
+                    DukkanKategoriId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dukkanlar", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Dukkanlar_DukkanKategori_DukkanKategoriId",
+                        column: x => x.DukkanKategoriId,
+                        principalTable: "DukkanKategori",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Urunler",
                 columns: table => new
                 {
@@ -125,7 +168,6 @@ namespace Esnafim.Migrations
                     updated_at = table.Column<DateTime>(nullable: true),
                     deleted = table.Column<bool>(nullable: false),
                     urun_adi = table.Column<string>(nullable: true),
-                    urun_kategori_id = table.Column<string>(nullable: true),
                     fiyat = table.Column<double>(nullable: false),
                     adet_kg = table.Column<string>(nullable: true),
                     KategoriId = table.Column<int>(nullable: true)
@@ -168,46 +210,10 @@ namespace Esnafim.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Dukkanlar",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    created_by = table.Column<int>(nullable: true),
-                    updated_by = table.Column<int>(nullable: true),
-                    created_at = table.Column<DateTime>(nullable: false),
-                    updated_at = table.Column<DateTime>(nullable: true),
-                    deleted = table.Column<bool>(nullable: false),
-                    esnaf_user_id = table.Column<int>(nullable: false),
-                    urun_id = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Dukkanlar", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Dukkanlar_EsnafUser_esnaf_user_id",
-                        column: x => x.esnaf_user_id,
-                        principalTable: "EsnafUser",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Dukkanlar_Urunler_urun_id",
-                        column: x => x.urun_id,
-                        principalTable: "Urunler",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
-                name: "IX_Dukkanlar_esnaf_user_id",
+                name: "IX_Dukkanlar_DukkanKategoriId",
                 table: "Dukkanlar",
-                column: "esnaf_user_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Dukkanlar_urun_id",
-                table: "Dukkanlar",
-                column: "urun_id");
+                column: "DukkanKategoriId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SiparisDetaylari_siparis_id",
@@ -226,6 +232,9 @@ namespace Esnafim.Migrations
                 name: "Dukkanlar");
 
             migrationBuilder.DropTable(
+                name: "EsnafUser");
+
+            migrationBuilder.DropTable(
                 name: "MusteriUser");
 
             migrationBuilder.DropTable(
@@ -235,10 +244,10 @@ namespace Esnafim.Migrations
                 name: "SiparisDetaylari");
 
             migrationBuilder.DropTable(
-                name: "EsnafUser");
+                name: "Urunler");
 
             migrationBuilder.DropTable(
-                name: "Urunler");
+                name: "DukkanKategori");
 
             migrationBuilder.DropTable(
                 name: "Siparisler");

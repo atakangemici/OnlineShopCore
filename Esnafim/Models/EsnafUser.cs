@@ -27,8 +27,5 @@ namespace Esnafim.Models
         [Column("sifre")]
         public string Sifre { get; set; }
 
-        public virtual ICollection<Dukkanlar> Dukkan { get; set; }
-
-
     }
 }

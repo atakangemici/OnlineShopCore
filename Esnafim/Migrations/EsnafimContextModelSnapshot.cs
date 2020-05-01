@@ -19,6 +19,36 @@ namespace Esnafim.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Esnafim.Models.DukkanKategori", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnName("created_at");
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnName("created_by");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnName("deleted");
+
+                    b.Property<string>("KategoriAdi")
+                        .HasColumnName("kategori_adi");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnName("updated_at");
+
+                    b.Property<int?>("UpdatedById")
+                        .HasColumnName("updated_by");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DukkanKategori");
+                });
+
             modelBuilder.Entity("Esnafim.Models.Dukkanlar", b =>
                 {
                     b.Property<int>("Id")
@@ -38,8 +68,7 @@ namespace Esnafim.Migrations
                     b.Property<string>("DukkanAdi")
                         .HasColumnName("dukkan_adi");
 
-                    b.Property<int>("EsnafUserId")
-                        .HasColumnName("esnaf_user_id");
+                    b.Property<int?>("DukkanKategoriId");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnName("updated_at");
@@ -47,14 +76,9 @@ namespace Esnafim.Migrations
                     b.Property<int?>("UpdatedById")
                         .HasColumnName("updated_by");
 
-                    b.Property<int>("UrunId")
-                        .HasColumnName("urun_id");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("EsnafUserId");
-
-                    b.HasIndex("UrunId");
+                    b.HasIndex("DukkanKategoriId");
 
                     b.ToTable("Dukkanlar");
                 });
@@ -328,9 +352,6 @@ namespace Esnafim.Migrations
                     b.Property<string>("UrunAdı")
                         .HasColumnName("urun_adi");
 
-                    b.Property<string>("UrunKategoriId")
-                        .HasColumnName("urun_kategori_id");
-
                     b.HasKey("Id");
 
                     b.HasIndex("KategoriId");
@@ -340,15 +361,9 @@ namespace Esnafim.Migrations
 
             modelBuilder.Entity("Esnafim.Models.Dukkanlar", b =>
                 {
-                    b.HasOne("Esnafim.Models.EsnafUser", "Esnaf")
-                        .WithMany("Dukkan")
-                        .HasForeignKey("EsnafUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Esnafim.Models.Urunler", "Urun")
-                        .WithMany("Dukkan")
-                        .HasForeignKey("UrunId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("Esnafim.Models.DukkanKategori", "DukkanKategori")
+                        .WithMany("Dukkanlar")
+                        .HasForeignKey("DukkanKategoriId");
                 });
 
             modelBuilder.Entity("Esnafim.Models.SiparisDetaylari", b =>
