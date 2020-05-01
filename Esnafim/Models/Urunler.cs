@@ -10,7 +10,7 @@ namespace Esnafim.Models
     public class Urunler : BaseEntity
     {
         [Column("urun_adi")]
-        public string UrunAdı { get; set; }
+        public string UrunAdi { get; set; }
 
         [Column("fiyat")]
         public double Fiyat { get; set; }
@@ -19,6 +19,8 @@ namespace Esnafim.Models
         public string AdetKg { get; set; }
 
         public virtual Kategoriler Kategori { get; set; }
+        public virtual Dukkanlar Dukkan { get; set; }
+
 
     }
 }

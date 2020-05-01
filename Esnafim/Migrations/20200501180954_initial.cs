@@ -157,33 +157,6 @@ namespace Esnafim.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Urunler",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    created_by = table.Column<int>(nullable: true),
-                    updated_by = table.Column<int>(nullable: true),
-                    created_at = table.Column<DateTime>(nullable: false),
-                    updated_at = table.Column<DateTime>(nullable: true),
-                    deleted = table.Column<bool>(nullable: false),
-                    urun_adi = table.Column<string>(nullable: true),
-                    fiyat = table.Column<double>(nullable: false),
-                    adet_kg = table.Column<string>(nullable: true),
-                    KategoriId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Urunler", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Urunler_Kategoriler_KategoriId",
-                        column: x => x.KategoriId,
-                        principalTable: "Kategoriler",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SiparisDetaylari",
                 columns: table => new
                 {
@@ -210,6 +183,40 @@ namespace Esnafim.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Urunler",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    created_by = table.Column<int>(nullable: true),
+                    updated_by = table.Column<int>(nullable: true),
+                    created_at = table.Column<DateTime>(nullable: false),
+                    updated_at = table.Column<DateTime>(nullable: true),
+                    deleted = table.Column<bool>(nullable: false),
+                    urun_adi = table.Column<string>(nullable: true),
+                    fiyat = table.Column<double>(nullable: false),
+                    adet_kg = table.Column<string>(nullable: true),
+                    KategoriId = table.Column<int>(nullable: true),
+                    DukkanId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Urunler", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Urunler_Dukkanlar_DukkanId",
+                        column: x => x.DukkanId,
+                        principalTable: "Dukkanlar",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Urunler_Kategoriler_KategoriId",
+                        column: x => x.KategoriId,
+                        principalTable: "Kategoriler",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Dukkanlar_DukkanKategoriId",
                 table: "Dukkanlar",
@@ -221,6 +228,11 @@ namespace Esnafim.Migrations
                 column: "siparis_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Urunler_DukkanId",
+                table: "Urunler",
+                column: "DukkanId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Urunler_KategoriId",
                 table: "Urunler",
                 column: "KategoriId");
@@ -228,9 +240,6 @@ namespace Esnafim.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Dukkanlar");
-
             migrationBuilder.DropTable(
                 name: "EsnafUser");
 
@@ -247,13 +256,16 @@ namespace Esnafim.Migrations
                 name: "Urunler");
 
             migrationBuilder.DropTable(
-                name: "DukkanKategori");
-
-            migrationBuilder.DropTable(
                 name: "Siparisler");
 
             migrationBuilder.DropTable(
+                name: "Dukkanlar");
+
+            migrationBuilder.DropTable(
                 name: "Kategoriler");
+
+            migrationBuilder.DropTable(
+                name: "DukkanKategori");
         }
     }
 }

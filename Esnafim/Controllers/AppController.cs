@@ -36,6 +36,14 @@ namespace Esnafim.Controllers
             return new string[] { "home page" };
         }
 
+        [Route("login"), HttpPost]
+        public async Task<ActionResult<MusteriUser>> Login([FromBody]JObject data)
+        {
+            var user = await _appOperation.Login(data);
+
+            return Ok(user);
+        }
+
         [Route("get_all_shops"), HttpGet]
         public async Task<ActionResult<DukkanKategori>> GetAllShops()
         {
@@ -52,12 +60,12 @@ namespace Esnafim.Controllers
             return Ok(products);
         }
 
-        [Route("login"), HttpPost]
-        public async Task<ActionResult<MusteriUser>> Login([FromBody]JObject data)
+        [Route("add_order_product"), HttpGet]
+        public async Task<ActionResult<Siparisler>> AddOrderProduct([FromBody]JObject product)
         {
-            var user = await _appOperation.Login(data);
+            var addProduct = await _appOperation.AddOrderProduct(product);
 
-            return Ok(user);
+            return Ok(addProduct);
         }
 
     }

@@ -13,6 +13,7 @@ namespace Esnafim.Models
         public string DukkanAdi { get; set; }
 
         public virtual DukkanKategori DukkanKategori { get; set; }
+        public virtual ICollection<Urunler> Urunler { get; set; }
 
     }
 }

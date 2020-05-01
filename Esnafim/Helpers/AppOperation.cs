@@ -38,6 +38,22 @@ namespace Esnafim.Helpers
             return products;
         }
 
+        public async Task<int> AddOrderProduct(JObject data)
+        {
+            var order = new Siparisler();
+            order.Deleted = false;
+            order.CreatedAt = DateTime.Now;
+            order.MusteriId = (int)data["musteriId"];
+            order.DukkanId = (int)data["dukkanId"];
+            order.Status = (string)data["OnayBekliyor"];
+            order.ToplamSiparisTutari = (double)data["toplamTutar"];
+
+            _dbContext.Siparisler.Add(order);
+            var addProduct = await _dbContext.SaveChangesAsync();
+
+            return addProduct;
+        }
+
         public async Task<MusteriUser> Login(JObject data)
         {
             var user = _dbContext.MusteriUser.Where(x => x.Email == (string)data["email"] && x.Sifre == (string)data["password"]).FirstOrDefault();

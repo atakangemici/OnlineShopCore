@@ -338,6 +338,8 @@ namespace Esnafim.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnName("deleted");
 
+                    b.Property<int?>("DukkanId");
+
                     b.Property<double>("Fiyat")
                         .HasColumnName("fiyat");
 
@@ -349,10 +351,12 @@ namespace Esnafim.Migrations
                     b.Property<int?>("UpdatedById")
                         .HasColumnName("updated_by");
 
-                    b.Property<string>("UrunAdı")
+                    b.Property<string>("UrunAdi")
                         .HasColumnName("urun_adi");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DukkanId");
 
                     b.HasIndex("KategoriId");
 
@@ -376,6 +380,10 @@ namespace Esnafim.Migrations
 
             modelBuilder.Entity("Esnafim.Models.Urunler", b =>
                 {
+                    b.HasOne("Esnafim.Models.Dukkanlar", "Dukkan")
+                        .WithMany("Urunler")
+                        .HasForeignKey("DukkanId");
+
                     b.HasOne("Esnafim.Models.Kategoriler", "Kategori")
                         .WithMany("Urunler")
                         .HasForeignKey("KategoriId");
