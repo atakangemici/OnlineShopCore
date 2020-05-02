@@ -44,6 +44,14 @@ namespace Esnafim.Controllers
             return Ok(user);
         }
 
+        [Route("add_order_product"), HttpGet]
+        public async Task<ActionResult<Siparisler>> AddOrderProduct([FromBody]JObject product)
+        {
+            var addProduct = await _appOperation.AddOrderProduct(product);
+
+            return Ok(addProduct);
+        }
+
         [Route("get_all_shops"), HttpGet]
         public async Task<ActionResult<DukkanKategori>> GetAllShops()
         {
@@ -52,20 +60,12 @@ namespace Esnafim.Controllers
             return Ok(shops);
         }
 
-        [Route("get_products/{id:int}"), HttpGet]
-        public async Task<ActionResult<Kategoriler>> GetProducts(int id)
+        [Route("get_shop/{id:int}"), HttpGet]
+        public async Task<Dukkanlar> GetShop(int id)
         {
-            var products = await _appOperation.GetProducts(id);
+            var getShop = await _appOperation.GetShop(id);
 
-            return Ok(products);
-        }
-
-        [Route("add_order_product"), HttpGet]
-        public async Task<ActionResult<Siparisler>> AddOrderProduct([FromBody]JObject product)
-        {
-            var addProduct = await _appOperation.AddOrderProduct(product);
-
-            return Ok(addProduct);
+            return getShop;
         }
 
     }

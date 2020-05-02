@@ -11,8 +11,12 @@ namespace Esnafim.Models
     {
         [Column("kategori_adi")]
         public string KategoriAdi { get; set; }
+        public int DukkanId { get; set; }
+        [ForeignKey("DukkanId")]
+        public Dukkanlar Dukkan { get; set; }
 
-        public virtual ICollection<Urunler> Urunler { get; set; }
+        public List<Urunler> Urun { get; set; }
+
 
     }
 }

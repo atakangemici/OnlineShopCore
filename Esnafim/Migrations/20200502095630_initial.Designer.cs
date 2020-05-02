@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Esnafim.Migrations
 {
     [DbContext(typeof(EsnafimContext))]
-    [Migration("20200501180954_initial")]
+    [Migration("20200502095630_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,6 +71,9 @@ namespace Esnafim.Migrations
                         .HasColumnName("dukkan_adi");
 
                     b.Property<int?>("DukkanKategoriId");
+
+                    b.Property<double>("MinimumSiparisTutari")
+                        .HasColumnName("minimum_siparis_tutari");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnName("updated_at");
@@ -146,6 +149,8 @@ namespace Esnafim.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnName("deleted");
 
+                    b.Property<int>("DukkanId");
+
                     b.Property<string>("KategoriAdi")
                         .HasColumnName("kategori_adi");
 
@@ -156,6 +161,8 @@ namespace Esnafim.Migrations
                         .HasColumnName("updated_by");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DukkanId");
 
                     b.ToTable("Kategoriler");
                 });
@@ -340,12 +347,10 @@ namespace Esnafim.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnName("deleted");
 
-                    b.Property<int?>("DukkanId");
-
                     b.Property<double>("Fiyat")
                         .HasColumnName("fiyat");
 
-                    b.Property<int?>("KategoriId");
+                    b.Property<int>("KategoriId");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnName("updated_at");
@@ -357,8 +362,6 @@ namespace Esnafim.Migrations
                         .HasColumnName("urun_adi");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DukkanId");
 
                     b.HasIndex("KategoriId");
 
@@ -372,6 +375,14 @@ namespace Esnafim.Migrations
                         .HasForeignKey("DukkanKategoriId");
                 });
 
+            modelBuilder.Entity("Esnafim.Models.Kategoriler", b =>
+                {
+                    b.HasOne("Esnafim.Models.Dukkanlar", "Dukkan")
+                        .WithMany("Kategori")
+                        .HasForeignKey("DukkanId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Esnafim.Models.SiparisDetaylari", b =>
                 {
                     b.HasOne("Esnafim.Models.Siparisler", "Siparis")
@@ -382,13 +393,10 @@ namespace Esnafim.Migrations
 
             modelBuilder.Entity("Esnafim.Models.Urunler", b =>
                 {
-                    b.HasOne("Esnafim.Models.Dukkanlar", "Dukkan")
-                        .WithMany("Urunler")
-                        .HasForeignKey("DukkanId");
-
                     b.HasOne("Esnafim.Models.Kategoriler", "Kategori")
-                        .WithMany("Urunler")
-                        .HasForeignKey("KategoriId");
+                        .WithMany("Urun")
+                        .HasForeignKey("KategoriId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

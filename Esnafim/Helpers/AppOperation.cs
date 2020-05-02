@@ -1,5 +1,4 @@
 ﻿using Esnafim.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using System;
@@ -28,14 +27,15 @@ namespace Esnafim.Helpers
             return shops;
         }
 
-        public async Task<List<Kategoriler>> GetProducts(int id)
+        public async Task<Dukkanlar> GetShop(int id)
         {
-            var products = _dbContext.Kategoriler            
-            .Where(x => x.Deleted != true)
-            .Include(x => x.Urunler)
-            .ToList();
+            var getShop = _dbContext.Dukkanlar
+                .Where(x => x.Id == id)
+                .Include(s => s.Kategori)
+                .ThenInclude(sn => sn.Urun)
+                .FirstOrDefault();
 
-            return products;
+            return getShop;
         }
 
         public async Task<int> AddOrderProduct(JObject data)

@@ -12,8 +12,11 @@ namespace Esnafim.Models
         [Column("dukkan_adi")]
         public string DukkanAdi { get; set; }
 
+        [Column("minimum_siparis_tutari")]
+        public double MinimumSiparisTutari { get; set; }
+
         public virtual DukkanKategori DukkanKategori { get; set; }
-        public virtual ICollection<Urunler> Urunler { get; set; }
+        public virtual List<Kategoriler> Kategori { get; set; }
 
     }
 }

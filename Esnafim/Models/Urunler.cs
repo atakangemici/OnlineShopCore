@@ -17,10 +17,10 @@ namespace Esnafim.Models
 
         [Column("adet_kg")]
         public string AdetKg { get; set; }
+        public int KategoriId { get; set; }
 
+        [ForeignKey("KategoriId")]
         public virtual Kategoriler Kategori { get; set; }
-        public virtual Dukkanlar Dukkan { get; set; }
-
 
     }
 }
