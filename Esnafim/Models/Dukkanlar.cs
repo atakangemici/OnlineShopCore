@@ -12,6 +12,12 @@ namespace Esnafim.Models
         [Column("dukkan_adi")]
         public string DukkanAdi { get; set; }
 
+        [Column("dukkan_adres")]
+        public string DukkanAdres { get; set; }
+
+        [Column("teslimat_suresi")]
+        public string TeslimatSuresi { get; set; }
+
         [Column("minimum_siparis_tutari")]
         public double MinimumSiparisTutari { get; set; }
 
