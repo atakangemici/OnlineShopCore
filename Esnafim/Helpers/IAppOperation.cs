@@ -14,6 +14,9 @@ namespace Esnafim.Helpers
         Task<MusteriUser> Login(JObject data);
         Task<int> AddOrderProduct(JObject data);
         Task<Dukkanlar> GetShop(int id);
+        Task<List<Sepet>> GetOrder(int id);
+
+        Task<int> OrderApproved(JObject data);
 
     }
 }

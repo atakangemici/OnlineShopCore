@@ -40,18 +40,21 @@ namespace Esnafim.Helpers
 
         public async Task<int> AddOrderProduct(JObject data)
         {
-            var order = new Siparisler();
+            var order = new Sepet();
             order.Deleted = false;
             order.CreatedAt = DateTime.Now;
             order.MusteriId = (int)data["musteriId"];
             order.DukkanId = (int)data["dukkanId"];
-            order.Status = (string)data["OnayBekliyor"];
-            order.ToplamSiparisTutari = (double)data["toplamTutar"];
+            order.UrunId = (int)data["urunId"];
+            order.UrunAdi = (string)data["urunAdi"];
+            order.UrunFiyat = (int)data["urunFiyat"];
 
-            _dbContext.Siparisler.Add(order);
-            var addProduct = await _dbContext.SaveChangesAsync();
 
-            return addProduct;
+
+            _dbContext.Sepet.Add(order);
+            var addOrder = await _dbContext.SaveChangesAsync();
+
+            return addOrder;
         }
 
         public async Task<MusteriUser> Login(JObject data)
@@ -60,5 +63,44 @@ namespace Esnafim.Helpers
 
             return user;
         }
+
+
+        public async Task<List<Sepet>> GetOrder(int id)
+        {
+            var getOrder = _dbContext.Sepet
+                .Where(x => x.MusteriId == id && x.Deleted == false)
+                .ToList();
+
+            return getOrder;
+        }
+
+        public async Task<int> OrderApproved(JObject data)
+        {
+            var order = new Siparis();
+            order.Deleted = false;
+            order.CreatedAt = DateTime.Now;
+            order.MusteriId = (int)data["musteriId"];
+            order.DukkanId = (int)data["dukkanId"];
+            order.SiparisTutari = (int)data["toplamTutar"];
+
+            _dbContext.Siparis.Add(order);
+            var addOrder = await _dbContext.SaveChangesAsync();
+
+            var getOrders = _dbContext.Sepet
+                .Where(x => x.MusteriId == (int)data["musteriId"] && x.Deleted == false)
+                .ToList();
+
+            foreach (var getOrder in getOrders)
+            {
+                getOrder.Deleted = true;
+                getOrder.SiparisId = order.Id;
+
+                _dbContext.Sepet.Update(getOrder);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return addOrder;
+        }
+
     }
 }

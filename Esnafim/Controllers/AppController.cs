@@ -44,12 +44,20 @@ namespace Esnafim.Controllers
             return Ok(user);
         }
 
-        [Route("add_order_product"), HttpGet]
-        public async Task<ActionResult<Siparisler>> AddOrderProduct([FromBody]JObject product)
+        [Route("add_order_product"), HttpPost]
+        public async Task<ActionResult<Sepet>> AddOrderProduct([FromBody]JObject product)
         {
             var addProduct = await _appOperation.AddOrderProduct(product);
 
             return Ok(addProduct);
+        }
+
+        [Route("get_order/{id:int}"), HttpGet]
+        public async Task<ActionResult<Sepet>> GetOrderProduct(int id)
+        {
+            var getProduct = await _appOperation.GetOrder(id);
+
+            return Ok(getProduct);
         }
 
         [Route("get_all_shops"), HttpGet]
@@ -66,6 +74,14 @@ namespace Esnafim.Controllers
             var getShop = await _appOperation.GetShop(id);
 
             return getShop;
+        }
+
+        [Route("order_approved"), HttpPost]
+        public async Task<ActionResult<Siparis>> OrderApproved([FromBody]JObject product)
+        {
+            var orderApproved = await _appOperation.OrderApproved(product);
+
+            return Ok(orderApproved);
         }
 
     }

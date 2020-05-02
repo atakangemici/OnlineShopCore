@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Esnafim.Models
 {
-    public class Siparisler : BaseEntity
+    public class Siparis : BaseEntity
     {
         [Column("musteri_id")]
         public int MusteriId { get; set; }
@@ -15,13 +15,10 @@ namespace Esnafim.Models
         [Column("dukkan_id")]
         public int DukkanId { get; set; }
 
-        [Column("status")]
-        public string Status { get; set; }
+        [Column("urun_id")]
+        public int UrunId { get; set; }
 
-        [Column("toplam_siparis_tutari")]
-        public double ToplamSiparisTutari { get; set; }
-
-        public virtual ICollection<SiparisDetaylari> SiparisDetay { get; set; }
-
+        [Column("siparis_tutari")]
+        public int SiparisTutari { get; set; }
     }
 }

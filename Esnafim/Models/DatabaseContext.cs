@@ -12,8 +12,8 @@ namespace Esnafim
         public DbSet<Kategoriler> Kategoriler { get; set; }
         public DbSet<MusteriUser> MusteriUser { get; set; }
         public DbSet<Sikayetler> Sikayetler { get; set; }
-        public DbSet<SiparisDetaylari> SiparisDetaylari { get; set; }
-        public DbSet<Siparisler> Siparisler { get; set; }
+        public DbSet<Sepet> Sepet { get; set; }
+        public DbSet<Siparis> Siparis { get; set; }
         public DbSet<Urunler> Urunler { get; set; }
         public DbSet<DukkanKategori> DukkanKategori { get; set; }
 
