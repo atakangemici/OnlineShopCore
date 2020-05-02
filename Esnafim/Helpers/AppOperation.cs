@@ -49,7 +49,9 @@ namespace Esnafim.Helpers
             order.UrunAdi = (string)data["urunAdi"];
             order.UrunFiyat = (int)data["urunFiyat"];
 
+            var dukkan = _dbContext.Dukkanlar.Where(x => x.Deleted == false && x.Id == (int)data["dukkanId"]).FirstOrDefault();
 
+            order.DukkanAdi = dukkan.DukkanAdi;
 
             _dbContext.Sepet.Add(order);
             var addOrder = await _dbContext.SaveChangesAsync();
@@ -83,6 +85,10 @@ namespace Esnafim.Helpers
             order.DukkanId = (int)data["dukkanId"];
             order.SiparisTutari = (int)data["toplamTutar"];
 
+            var dukkan = _dbContext.Dukkanlar.Where(x => x.Deleted == false && x.Id == (int)data["dukkanId"]).FirstOrDefault();
+
+            order.DukkanAdi = dukkan.DukkanAdi;
+
             _dbContext.Siparis.Add(order);
             var addOrder = await _dbContext.SaveChangesAsync();
 
@@ -102,5 +108,22 @@ namespace Esnafim.Helpers
             return addOrder;
         }
 
+        public async Task<List<Siparis>> GetOrdersApproved(int id)
+        {
+            var getOrderApproved = _dbContext.Siparis
+              .Where(x => x.MusteriId == id && x.Deleted == false)
+              .ToList();
+
+            return getOrderApproved;
+        }
+
+        public async Task<List<Sepet>> GetAapprovedOrders(int id)
+        {
+            var getOrdersApproved = _dbContext.Sepet
+              .Where(x => x.SiparisId == id && x.Deleted == true)
+              .ToList();
+
+            return getOrdersApproved;
+        }
     }
 }

@@ -4,14 +4,16 @@ using Esnafim;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Esnafim.Migrations
 {
     [DbContext(typeof(EsnafimContext))]
-    partial class EsnafimContextModelSnapshot : ModelSnapshot
+    [Migration("20200502141143_newMigration4")]
+    partial class newMigration4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -225,9 +227,6 @@ namespace Esnafim.Migrations
 
                     b.Property<bool>("Deleted")
                         .HasColumnName("deleted");
-
-                    b.Property<string>("DukkanAdi")
-                        .HasColumnName("dukkan_adi");
 
                     b.Property<int>("DukkanId")
                         .HasColumnName("dukkan_id");

@@ -15,6 +15,9 @@ namespace Esnafim.Models
         [Column("dukkan_id")]
         public int DukkanId { get; set; }
 
+        [Column("dukkan_adi")]
+        public string DukkanAdi { get; set; }
+
         [Column("urun_id")]
         public int UrunId { get; set; }
 

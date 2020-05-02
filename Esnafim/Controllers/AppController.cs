@@ -84,5 +84,20 @@ namespace Esnafim.Controllers
             return Ok(orderApproved);
         }
 
+        [Route("get_orders_approved/{id:int}"), HttpGet]
+        public async Task<ActionResult<Siparis>> GetOrdersApproved(int id)
+        {
+            var getOrdersApproved = await _appOperation.GetOrdersApproved(id);
+
+            return Ok(getOrdersApproved);
+        }
+
+        [Route("get_approved_orders/{id:int}"), HttpGet]
+        public async Task<ActionResult<Sepet>> GetAapprovedOrders(int id)
+        {
+            var getAapprovedOrders = await _appOperation.GetAapprovedOrders(id);
+
+            return Ok(getAapprovedOrders);
+        }
     }
 }

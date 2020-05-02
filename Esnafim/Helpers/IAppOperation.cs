@@ -15,8 +15,9 @@ namespace Esnafim.Helpers
         Task<int> AddOrderProduct(JObject data);
         Task<Dukkanlar> GetShop(int id);
         Task<List<Sepet>> GetOrder(int id);
-
         Task<int> OrderApproved(JObject data);
+        Task<List<Siparis>> GetOrdersApproved(int id);
+        Task<List<Sepet>> GetAapprovedOrders(int id);
 
     }
 }
