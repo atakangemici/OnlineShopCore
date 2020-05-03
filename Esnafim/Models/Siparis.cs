@@ -23,5 +23,8 @@ namespace Esnafim.Models
 
         [Column("siparis_tutari")]
         public int SiparisTutari { get; set; }
+
+        [Column("odeme_tipi")]
+        public string OdemeTipi { get; set; }
     }
 }

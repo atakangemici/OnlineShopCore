@@ -85,6 +85,8 @@ namespace Esnafim.Helpers
             order.MusteriId = (int)data["musteriId"];
             order.DukkanId = (int)data["dukkanId"];
             order.SiparisTutari = (int)data["toplamTutar"];
+            order.OdemeTipi = (string)data["odemeTipi"];
+
 
             var dukkan = _dbContext.Dukkanlar.Where(x => x.Deleted == false && x.Id == (int)data["dukkanId"]).FirstOrDefault();
 
@@ -106,7 +108,7 @@ namespace Esnafim.Helpers
                 await _dbContext.SaveChangesAsync();
             }
 
-            return addOrder;
+            return order.Id;
         }
 
         public async Task<List<Siparis>> GetOrdersApproved(int id)
