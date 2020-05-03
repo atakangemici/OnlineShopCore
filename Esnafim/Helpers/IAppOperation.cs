@@ -20,6 +20,7 @@ namespace Esnafim.Helpers
         Task<List<Sepet>> GetAapprovedOrders(int id);
         Task<Sepet> OrderUpdate(int id);
         Task<Siparis> GetProductOrder(int id);
+        Task<MusteriUser> AddUser(JObject User);
 
 
     }

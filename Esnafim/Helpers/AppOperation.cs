@@ -151,5 +151,29 @@ namespace Esnafim.Helpers
 
             return getOrdersApproved;
         }
+
+        public async Task<MusteriUser> AddUser(JObject User)
+        {
+            if (User == null)
+                return null;
+
+            MusteriUser userData = new MusteriUser
+            {
+                Ad = (string)User["ad"],
+                Soyad = (string)User["soyad"],
+                Email = (string)User["email"],
+                Sifre = (string)User["sifre"],
+                Telefon = (string)User["telefon"],
+                Adres = (string)User["adres"],
+                Deleted = false,
+                CreatedAt = DateTime.Now               
+            };
+
+
+            _dbContext.MusteriUser.Add(userData);
+            await _dbContext.SaveChangesAsync();
+
+            return userData;
+        }
     }
 }

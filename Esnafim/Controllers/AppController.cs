@@ -116,5 +116,13 @@ namespace Esnafim.Controllers
 
             return getProductOrder;
         }
+
+        [Route("add_user"), HttpPost]
+        public async Task<MusteriUser> AddUser([FromBody]JObject User)
+        {
+            var user = await _appOperation.AddUser(User);
+
+            return user;
+        }
     }
 }
