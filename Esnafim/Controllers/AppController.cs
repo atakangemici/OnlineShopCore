@@ -107,5 +107,14 @@ namespace Esnafim.Controllers
 
             return orderUpdate;
         }
+
+
+        [Route("get_product_order/{id:int}"), HttpGet]
+        public async Task<Siparis> GetProductOrder(int id)
+        {
+            var getProductOrder = await _appOperation.GetProductOrder(id);
+
+            return getProductOrder;
+        }
     }
 }

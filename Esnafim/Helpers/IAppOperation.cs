@@ -19,6 +19,8 @@ namespace Esnafim.Helpers
         Task<List<Siparis>> GetOrdersApproved(int id);
         Task<List<Sepet>> GetAapprovedOrders(int id);
         Task<Sepet> OrderUpdate(int id);
+        Task<Siparis> GetProductOrder(int id);
+
 
     }
 }

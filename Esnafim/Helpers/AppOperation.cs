@@ -142,5 +142,14 @@ namespace Esnafim.Helpers
 
             return orderUpdate;
         }
+
+        public async Task<Siparis> GetProductOrder(int id)
+        {
+            var getOrdersApproved = _dbContext.Siparis
+              .Where(x => x.Id == id && x.Deleted == false)
+              .FirstOrDefault();
+
+            return getOrdersApproved;
+        }
     }
 }
