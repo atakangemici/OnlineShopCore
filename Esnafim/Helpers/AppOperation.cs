@@ -31,6 +31,7 @@ namespace Esnafim.Helpers
         {
             var getShop = _dbContext.Dukkanlar
                 .Where(x => x.Id == id)
+                .Include(y=>y.DukkanKategori)
                 .Include(s => s.Kategori)
                 .ThenInclude(sn => sn.Urun)
                 .FirstOrDefault();
@@ -124,6 +125,20 @@ namespace Esnafim.Helpers
               .ToList();
 
             return getOrdersApproved;
+        }
+
+        public async Task<Sepet> OrderUpdate(int id)
+        {
+            var orderUpdate = _dbContext.Sepet
+              .Where(x => x.Id == id && x.Deleted == false)
+              .FirstOrDefault();
+
+            orderUpdate.Deleted = true;
+
+            _dbContext.Sepet.Update(orderUpdate);
+            await _dbContext.SaveChangesAsync();
+
+            return orderUpdate;
         }
     }
 }

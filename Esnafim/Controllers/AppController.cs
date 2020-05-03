@@ -99,5 +99,13 @@ namespace Esnafim.Controllers
 
             return Ok(getAapprovedOrders);
         }
+
+        [Route("order_update/{id:int}"), HttpGet]
+        public async Task<Sepet> OrderUpdate(int id)
+        {
+            var orderUpdate = await _appOperation.OrderUpdate(id);
+
+            return orderUpdate;
+        }
     }
 }
