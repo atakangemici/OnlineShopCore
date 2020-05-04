@@ -23,12 +23,10 @@ namespace Esnafim.Controllers
     public class AppController : ControllerBase
     {
         private readonly IAppOperation _appOperation;
-        private readonly EsnafimContext _dbContext;
 
         public AppController(EsnafimContext context, IAppOperation appOperation)
         {
             _appOperation = appOperation;
-            _dbContext = context;
         }
 
         // GET api/values
@@ -37,15 +35,6 @@ namespace Esnafim.Controllers
         {
             return new string[] { "home page" };
 
-
-        }
-
-        [Route("atakan"), HttpGet]
-        public async Task<Siparis> atakan()
-        {
-            var gelen =  _dbContext.Siparis.Where(x=>x.Deleted == false).FirstOrDefault();
-
-            return gelen;
         }
 
         [Route("login"), HttpPost]
