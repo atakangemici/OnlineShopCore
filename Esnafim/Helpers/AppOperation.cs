@@ -62,7 +62,18 @@ namespace Esnafim.Helpers
 
         public async Task<MusteriUser> Login(JObject data)
         {
-            var user = _dbContext.MusteriUser.Where(x => x.Email == (string)data["email"] && x.Sifre == (string)data["password"]).FirstOrDefault();
+            var user = _dbContext.MusteriUser.Where
+                (x => x.Email == (string)data["email"] && x.Sifre == (string)data["password"])
+                .Select(x => new MusteriUser()
+                {
+                    Ad = x.Ad,
+                    Soyad = x.Soyad,
+                    Email = x.Email,
+                    Telefon = x.Telefon,
+                    Adres = x.Adres,
+                    Deleted = x.Deleted
+
+                }).FirstOrDefault();
 
             return user;
         }
