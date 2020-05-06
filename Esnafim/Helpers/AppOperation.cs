@@ -59,7 +59,7 @@ namespace Esnafim.Helpers
             {
                 if (getOrder.DukkanId != (int)data["dukkanId"])
                 {
-                    return 3;
+                    return 2;
                 }
             }
 
