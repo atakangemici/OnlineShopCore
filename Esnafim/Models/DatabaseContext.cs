@@ -6,7 +6,6 @@ namespace Esnafim
 {
     public class EsnafimContext : DbContext
     {
-
         public DbSet<Dukkanlar> Dukkanlar { get; set; }
         public DbSet<EsnafUser> EsnafUser { get; set; }
         public DbSet<Kategoriler> Kategoriler { get; set; }
@@ -16,8 +15,6 @@ namespace Esnafim
         public DbSet<Siparis> Siparis { get; set; }
         public DbSet<Urunler> Urunler { get; set; }
         public DbSet<DukkanKategori> DukkanKategori { get; set; }
-
-
 
         public EsnafimContext(DbContextOptions<EsnafimContext> options) : base(options)
         {
