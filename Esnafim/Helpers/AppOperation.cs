@@ -170,7 +170,19 @@ namespace Esnafim.Helpers
               .Where(x => x.Id == id && x.Deleted == false)
               .FirstOrDefault();
 
-            orderUpdate.Deleted = true;
+            var adetKg = Convert.ToInt32(orderUpdate.AdetKg);
+            var getProduct = _dbContext.Urunler.Where(x => x.Deleted == false && x.Id == orderUpdate.UrunId).FirstOrDefault();
+
+            if (adetKg > 1)
+            {
+                adetKg = adetKg - 1;
+                orderUpdate.AdetKg = adetKg.ToString();
+                orderUpdate.UrunFiyat = orderUpdate.UrunFiyat - (int)getProduct.Fiyat;
+            }
+            else
+            {
+                orderUpdate.Deleted = true;
+            }
 
             _dbContext.Sepet.Update(orderUpdate);
             await _dbContext.SaveChangesAsync();
