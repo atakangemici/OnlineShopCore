@@ -51,12 +51,20 @@ namespace Esnafim.Helpers
             order.UrunFiyat = (int)data["urunFiyat"];
             order.AdetKg = "1";
 
-            var dukkan = _dbContext.Dukkanlar.Where(x => x.Deleted == false && x.Id == (int)data["dukkanId"]).FirstOrDefault();
-
             var getOrders = _dbContext.Sepet
               .Where(x => x.MusteriId == (int)data["musteriId"] && x.Deleted == false)
               .ToList();
 
+            foreach (var getOrder in getOrders)
+            {
+                if (getOrder.DukkanId != (int)data["dukkanId"])
+                {
+                    return 3;
+                }
+            }
+
+
+            var dukkan = _dbContext.Dukkanlar.Where(x => x.Deleted == false && x.Id == (int)data["dukkanId"]).FirstOrDefault();
             var getProduct = _dbContext.Urunler.Where(x => x.Deleted == false && x.Id == (int)data["urunId"]).FirstOrDefault();
 
             foreach (var getOrder in getOrders)
