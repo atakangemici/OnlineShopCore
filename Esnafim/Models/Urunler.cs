@@ -15,8 +15,12 @@ namespace Esnafim.Models
         [Column("fiyat")]
         public double Fiyat { get; set; }
 
-        [Column("adet_kg")]
-        public string AdetKg { get; set; }
+        [Column("birim")]
+        public string Birim { get; set; }
+
+        [Column("kg")]
+        public string Kg { get; set; }
+
         public int KategoriId { get; set; }
 
         [ForeignKey("KategoriId")]

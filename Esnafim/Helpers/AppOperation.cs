@@ -31,7 +31,7 @@ namespace Esnafim.Helpers
         {
             var getShop = _dbContext.Dukkanlar
                 .Where(x => x.Id == id)
-                .Include(y=>y.DukkanKategori)
+                .Include(y => y.DukkanKategori)
                 .Include(s => s.Kategori)
                 .ThenInclude(sn => sn.Urun)
                 .FirstOrDefault();
@@ -49,15 +49,40 @@ namespace Esnafim.Helpers
             order.UrunId = (int)data["urunId"];
             order.UrunAdi = (string)data["urunAdi"];
             order.UrunFiyat = (int)data["urunFiyat"];
+            order.AdetKg = "1";
 
             var dukkan = _dbContext.Dukkanlar.Where(x => x.Deleted == false && x.Id == (int)data["dukkanId"]).FirstOrDefault();
 
+            var getOrders = _dbContext.Sepet
+              .Where(x => x.MusteriId == (int)data["musteriId"] && x.Deleted == false)
+              .ToList();
+
+            var getProduct = _dbContext.Urunler.Where(x => x.Deleted == false && x.Id == (int)data["urunId"]).FirstOrDefault();
+
+            foreach (var getOrder in getOrders)
+            {
+                if (getOrder.UrunId == (int)data["urunId"])
+                {
+                    var adetKgCalculate = Convert.ToInt32(getOrder.AdetKg) + 1;
+                    getOrder.AdetKg = adetKgCalculate.ToString();
+                    getOrder.UrunFiyat = (int)data["urunFiyat"] * Convert.ToInt32(getOrder.AdetKg);
+                    getOrder.Birim = getProduct.Birim;
+
+                    _dbContext.Sepet.Update(getOrder);
+                    var updateOrder = await _dbContext.SaveChangesAsync();
+
+                    return updateOrder;
+                }
+
+            }
+
             order.DukkanAdi = dukkan.DukkanAdi;
+            order.Birim = getProduct.Birim;
 
             _dbContext.Sepet.Add(order);
-            var addOrder = await _dbContext.SaveChangesAsync();
+            var addOrUpdateOrder = await _dbContext.SaveChangesAsync();
 
-            return addOrder;
+            return addOrUpdateOrder;
         }
 
         public async Task<MusteriUser> Login(JObject data)
@@ -97,7 +122,6 @@ namespace Esnafim.Helpers
             order.DukkanId = (int)data["dukkanId"];
             order.SiparisTutari = (int)data["toplamTutar"];
             order.OdemeTipi = (string)data["odemeTipi"];
-
 
             var dukkan = _dbContext.Dukkanlar.Where(x => x.Deleted == false && x.Id == (int)data["dukkanId"]).FirstOrDefault();
 
@@ -177,7 +201,7 @@ namespace Esnafim.Helpers
                 Telefon = (string)User["telefon"],
                 Adres = (string)User["adres"],
                 Deleted = false,
-                CreatedAt = DateTime.Now               
+                CreatedAt = DateTime.Now
             };
 
 

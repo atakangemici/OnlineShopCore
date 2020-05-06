@@ -27,10 +27,18 @@ namespace Esnafim.Models
         [Column("urun_fiyat")]
         public int UrunFiyat { get; set; }
 
+        [Column("birim")]
+        public string Birim { get; set; }
+
+        [Column("adet_kg")]
+        public string AdetKg { get; set; }
+
         [Column("sepet_tutari")]
         public int SepetTutari { get; set; }
 
         [Column("siparis_id")]
         public int SiparisId { get; set; }
+
+
     }
 }

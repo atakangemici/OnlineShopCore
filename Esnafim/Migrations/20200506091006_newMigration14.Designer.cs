@@ -4,14 +4,16 @@ using Esnafim;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Esnafim.Migrations
 {
     [DbContext(typeof(EsnafimContext))]
-    partial class EsnafimContextModelSnapshot : ModelSnapshot
+    [Migration("20200506091006_newMigration14")]
+    partial class newMigration14
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,11 +231,8 @@ namespace Esnafim.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AdetKg")
+                    b.Property<int>("AdetKg")
                         .HasColumnName("adet_kg");
-
-                    b.Property<string>("Birim")
-                        .HasColumnName("birim");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnName("created_at");

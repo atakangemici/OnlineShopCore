@@ -4,14 +4,16 @@ using Esnafim;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Esnafim.Migrations
 {
     [DbContext(typeof(EsnafimContext))]
-    partial class EsnafimContextModelSnapshot : ModelSnapshot
+    [Migration("20200506101448_newMigration18")]
+    partial class newMigration18
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
